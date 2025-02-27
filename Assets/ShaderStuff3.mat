@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShaderStuff
+  m_Name: ShaderStuff3
   m_Shader: {fileID: 4800000, guid: 114d92f5956657d4da09378841696528, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -87,14 +87,14 @@ Material:
     m_Floats:
     - ACES_Tonemapping: 0
     - Aberration_Quality: 1
-    - Blur: 0
+    - Blur: 3
     - Blur_Distorsion: 0
     - CA_Distorsion: 0
     - Chromatic_Aberration: 0
     - Color_Tint: 0
     - Distorsion: 0
     - Dithering: 0
-    - Glitch: 0
+    - Glitch: 1
     - HSV_Desaturate_Selected: 1
     - HSV_Selection: 0
     - HSV_Transform: 0
@@ -107,21 +107,21 @@ Material:
     - Overlay_Texture: 0
     - Overlay_Texture_Sheet: 0
     - Particle_Render: 0
-    - Pixelization: 1
-    - Posterization: 1
+    - Pixelization: 0
+    - Posterization: 0
     - ScreenRotation: 0
     - Shake: 1
-    - Static_Noise: 0
+    - Static_Noise: 1
     - Texture_Distorsion: 0
-    - Vignette: 0
+    - Vignette: 1
     - Wave_Distorsion: 1
     - _ActiveTime: 0.4
     - _AngleStartFade: 0.25
     - _BlockGlitch: 0.25
-    - _BlockSize: 10
+    - _BlockSize: 0
     - _BlueInvert: 0
-    - _BlurIterations: 8
-    - _BlurMask: 0.5
+    - _BlurIterations: 1
+    - _BlurMask: 0
     - _BlurRange: 0.01
     - _BlurRotation: 0
     - _BlurRotationSpeed: 0
@@ -141,7 +141,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Gravitation: 0
+    - _Gravitation: 1
     - _Grayscale: 0
     - _GreenInvert: 0
     - _Hue: 1
@@ -156,9 +156,9 @@ Material:
     - _MaskAlpha: 0
     - _MaskAmount: 0
     - _MaxAngle: 0.5
-    - _MaxRange: 5
+    - _MaxRange: 10
     - _Metallic: 0
-    - _MinRange: 1
+    - _MinRange: 2
     - _Mode: 0
     - _NeonBrightness: 3
     - _NeonColorAlpha: 1
@@ -179,7 +179,7 @@ Material:
     - _PSize_Y: 4
     - _Parallax: 0.02
     - _Period: 6
-    - _PosterizationSteps: 18
+    - _PosterizationSteps: 16
     - _RedInvert: 0
     - _SIntensity_X: 0.01
     - _SIntensity_Y: 0.01
@@ -190,15 +190,15 @@ Material:
     - _ScreenRotation: 0.1
     - _ScreenRotationSpeed: 2
     - _ScreenVerticalFlip: 0
-    - _SizeGirls: 0.4409424
+    - _SizeGirls: 0.136
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _StaticAlpha: 0.431
+    - _StaticAlpha: 0.17
     - _StaticBrightness: 1
-    - _StaticIntensity: 0.536
+    - _StaticIntensity: -0.34
     - _TimeGirls: 1
-    - _UPS: 15
+    - _UPS: 0
     - _UVSec: 0
     - _VignetteAlpha: 0.15
     - _VignetteRounding: 0.5
@@ -207,7 +207,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BlurCenterOffset: {r: 0, g: 0, b: 0, a: 0}
-    - _BlurColor: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 1}
+    - _BlurColor: {r: 1, g: 1, b: 1, a: 1}
     - _Brightness: {r: 1, g: 1, b: 1, a: 1}
     - _CA_centerOffset: {r: 0, g: 0, b: 0, a: 0}
     - _CA_direction: {r: 1, g: 0, b: 0, a: 0}
@@ -228,7 +228,7 @@ Material:
     - _ShakeScroll: {r: 2, g: 0.02, b: 0, a: 0}
     - _ShakeWave: {r: 0.01, g: 0.01, b: 0, a: 0}
     - _ShakeWaveSpeed: {r: 20, g: 19, b: 0, a: 0}
-    - _StaticColour: {r: 0.9622642, g: 0, b: 0.029474718, a: 1}
+    - _StaticColour: {r: 1, g: 1, b: 1, a: 1}
     - _TargetColor: {r: 1, g: 0, b: 0, a: 1}
     - _TransformColor: {r: 0, g: 0, b: 1, a: 1}
     - _VignetteColor: {r: 0, g: 0, b: 0, a: 1}
