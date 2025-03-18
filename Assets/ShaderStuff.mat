@@ -110,7 +110,7 @@ Material:
     - Pixelization: 1
     - Posterization: 1
     - ScreenRotation: 0
-    - Shake: 1
+    - Shake: 0
     - Static_Noise: 0
     - Texture_Distorsion: 0
     - Vignette: 0
