@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Mall.unity
+    path: Assets/Scenes/Museum.unity
     guid: f511cc4a250af3a4bbd041e78696330c
   - enabled: 1
     path: Assets/Scenes/VR_TestingArea.unity
