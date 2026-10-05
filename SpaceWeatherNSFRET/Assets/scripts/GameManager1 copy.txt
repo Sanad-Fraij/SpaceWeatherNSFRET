@@ -1,0 +1,111 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class GameManager : MonoBehaviour
+{
+    public static GameManager Instance { get; private set; }
+
+    [Header("Door State")]
+    // Tracks completion state for Doors 0 through 4 (Door 5 is index 4)
+    public bool[] completedDoors = new bool[5]; 
+    public int lastDoorUsed = -1; // -1 means starting fresh/restarted
+
+    [Header("Player Settings")]
+    public GameObject playerObject; // Drag your Player GameObject here
+
+    private void Awake()
+    {
+        // Singleton setup to keep this object alive across scene loads
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            
+            // Retain player object across scenes
+            if (playerObject != null)
+            {
+                DontDestroyOnLoad(playerObject);
+            }
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+    }
+
+    /// <summary>
+    /// Checks if doors 0 through 3 (the first 4 doors) have been completed.
+    /// </summary>
+    public bool AreFirst4DoorsCompleted()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (!completedDoors[i]) return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Call this method to restart the game state or return to the hub spawn.
+    /// </summary>
+    public void RestartGame()
+    {
+        lastDoorUsed = -1;
+        // Option to reset completion array if needed:
+        // System.Array.Clear(completedDoors, 0, completedDoors.Length);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Handle player positioning after a scene loads
+        if (playerObject != null)
+        {
+            PositionPlayerAtDoor();
+        }
+    }
+
+    private void PositionPlayerAtDoor()
+{
+    DoorSpawnPoint[] spawnPoints = FindObjectsOfType<DoorSpawnPoint>();
+    Transform targetSpawn = null;
+
+    int targetDoorID = lastDoorUsed;
+
+    foreach (var spawn in spawnPoints)
+    {
+        if (spawn.doorID == targetDoorID)
+        {
+            targetSpawn = spawn.transform;
+            break;
+        }
+    }
+
+    if (targetSpawn != null && playerObject != null)
+    {
+        // 1. Disable CharacterController or Rigidbody to prevent physics interpolation
+        CharacterController cc = playerObject.GetComponent<CharacterController>();
+        Rigidbody rb = playerObject.GetComponent<Rigidbody>();
+
+        if (cc != null) cc.enabled = false;
+        if (rb != null) rb.isKinematic = true;
+
+        // 2. Teleport the player
+        playerObject.transform.position = targetSpawn.position;
+        playerObject.transform.rotation = targetSpawn.rotation;
+
+        // 3. Re-enable physics/movement controllers
+        if (cc != null) cc.enabled = true;
+        if (rb != null) rb.isKinematic = false;
+    }
+}
+}
