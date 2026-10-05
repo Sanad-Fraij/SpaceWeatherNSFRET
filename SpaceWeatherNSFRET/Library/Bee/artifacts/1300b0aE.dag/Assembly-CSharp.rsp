@@ -388,6 +388,7 @@
 "Assets/scripts/ExitDoor.cs"
 "Assets/scripts/GameManager.cs"
 "Assets/scripts/PlayerInstance.cs"
+"Assets/scripts/SolarSystemOrbit.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark02.cs"
