@@ -10,6 +10,13 @@ public class SolarSystemSpinner : MonoBehaviour
         [Header("Target Object")]
         public Transform planetTransform;
 
+        [Header("Distance & Scale")]
+        [Tooltip("Distance of this planet from the Sun (measured in local space).")]
+        public float distanceFromSun = 10f;
+
+        [Tooltip("Uniform scale value for the planet's mesh size.")]
+        public float sizeScale = 1f;
+
         [Header("Speed Controls")]
         [Tooltip("Speed at which the planet orbits around the Sun.")]
         public float orbitSpeed = 20f;
@@ -30,6 +37,12 @@ public class SolarSystemSpinner : MonoBehaviour
     [Tooltip("Global multiplier for all planet orbit speeds.")]
     public float globalOrbitSpeed = 1f;
 
+    [Tooltip("Global scale multiplier applied to ALL planet sizes.")]
+    public float globalPlanetScale = 1f;
+
+    [Tooltip("Global scale multiplier applied to ALL planet orbital distances from the Sun.")]
+    public float globalDistanceScale = 1f;
+
     [Tooltip("If true, automatically populates empty planet slots from child objects on Awake.")]
     public bool autoPopulateChildren = true;
 
@@ -45,12 +58,15 @@ public class SolarSystemSpinner : MonoBehaviour
             for (int i = 0; i < childCount; i++)
             {
                 Transform child = transform.GetChild(i);
-                float distanceFromSun = Vector3.Distance(transform.position, child.position);
-                float safeDistance = Mathf.Max(distanceFromSun, 0.1f);
+                float initialDistance = Vector3.Distance(transform.position, child.position);
+                float safeDistance = Mathf.Max(initialDistance, 0.1f);
 
                 PlanetSettings setting = new PlanetSettings
                 {
                     planetTransform = child,
+                    distanceFromSun = safeDistance,
+                    // Take the X scale component as the uniform scale factor
+                    sizeScale = child.localScale.x,
                     // Closer planets orbit faster by default
                     orbitSpeed = 100f / Mathf.Sqrt(safeDistance),
                     selfRotationSpeed = Random.Range(30f, 100f),
@@ -66,14 +82,23 @@ public class SolarSystemSpinner : MonoBehaviour
 
     void Start()
     {
-        // Apply starting time offsets (scatters planets into mid-orbit immediately)
+        // Apply initial distance, local scale, and time offset scatter
         foreach (var planet in planets)
         {
             if (planet == null || planet.planetTransform == null) continue;
 
-            Vector3 axis = planet.orbitAxis == Vector3.zero ? Vector3.up : planet.orbitAxis.normalized;
+            // 1. Set planet distance relative to Sun along local forward direction
+            float totalDistance = planet.distanceFromSun * globalDistanceScale;
+            Vector3 directionFromSun = (planet.planetTransform.position - transform.position).normalized;
+            if (directionFromSun == Vector3.zero) directionFromSun = transform.forward;
+            
+            planet.planetTransform.position = transform.position + (directionFromSun * totalDistance);
 
-            // Rotate planet around the Sun by its starting offset angle
+            // 2. Set initial size scale (using 1 uniform float value across X, Y, Z)
+            planet.planetTransform.localScale = Vector3.one * (planet.sizeScale * globalPlanetScale);
+
+            // 3. Apply starting angle offset (timeOffset)
+            Vector3 axis = planet.orbitAxis == Vector3.zero ? Vector3.up : planet.orbitAxis.normalized;
             planet.planetTransform.RotateAround(transform.position, axis, planet.timeOffset);
         }
     }
@@ -85,6 +110,17 @@ public class SolarSystemSpinner : MonoBehaviour
             if (planet == null || planet.planetTransform == null) continue;
 
             Vector3 axis = planet.orbitAxis == Vector3.zero ? Vector3.up : planet.orbitAxis.normalized;
+
+            // Update planet size continuously in case global or local scale changes in real time
+            planet.planetTransform.localScale = Vector3.one * (planet.sizeScale * globalPlanetScale);
+
+            // Maintain correct scaled distance from Sun while maintaining orbital direction
+            Vector3 offsetFromSun = planet.planetTransform.position - transform.position;
+            float desiredDistance = planet.distanceFromSun * globalDistanceScale;
+            if (offsetFromSun.sqrMagnitude > 0.001f)
+            {
+                planet.planetTransform.position = transform.position + (offsetFromSun.normalized * desiredDistance);
+            }
 
             // 1. Orbit around the Sun
             float currentOrbitSpeed = planet.orbitSpeed * globalOrbitSpeed;
