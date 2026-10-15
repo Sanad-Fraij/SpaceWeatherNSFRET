@@ -216,7 +216,7 @@ public class MultiPageQuizManager : MonoBehaviour
             RectTransform rect = qObj.GetComponent<RectTransform>();
             if (rect != null) rect.anchoredPosition = questionPositionOffset;
 
-            SetTextOnObject(qObj, "You have reached the end of the quiz! Click Submit to check your answers.");
+            SetTextOnObject(qObj, "Click Submit to check your answers.");
         }
 
         // Left Arrow to allow navigating back to revise answers
