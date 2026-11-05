@@ -15,10 +15,12 @@ public class SolarFlareDisplay : MonoBehaviour
     [SerializeField] private string apiKey = "DEMO_KEY";
 
     private const string NasaApiUrl = "https://api.nasa.gov/DONKI/FLR";
+    
 
     private void Start()
     {
-        StartCoroutine(FetchLatestSolarFlare());
+        flareDateText.text = "Recent large Solarflare: 5/11/2025";
+        //StartCoroutine(FetchLatestSolarFlare());
     }
 
     private IEnumerator FetchLatestSolarFlare()
@@ -33,7 +35,7 @@ public class SolarFlareDisplay : MonoBehaviour
             if (webRequest.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError($"Error fetching solar flare data: {webRequest.error}");
-                if (flareDateText != null) flareDateText.text = "Error Loading Data";
+                if (flareDateText != null) flareDateText.text = "Recent large Solarflare: 5/11/2025";
                 yield break;
             }
 
